@@ -48,7 +48,18 @@
             border: 3px solid rgb(110, 110, 110);
             cursor: pointer;
         }
-
+        .btn-left{
+            position: absolute;
+            top: 50%;
+            transform: translateY(50%);
+            left: 10px;
+        }
+        .btn-right{
+            position: absolute;
+            top: 50%;
+            transform: translateY(50%);
+            right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -70,6 +81,8 @@
             <li></li>
             <li></li>
         </ul>
+        <button type="button" class="btn btn-secondary btn-left">←</button>
+        <button type="button" class="btn btn-secondary btn-right">→</button>
     </div>
     
     <script src="./js/jquery-3.6.0.js"></script>
@@ -107,8 +120,32 @@
             startInterval();    
         });
 
-        startInterval();
+        $('.btn-left').click(function () {
+            page--;
+            if(page<0){
+                page = 5;
+            }
+            // carousel移動
+            $('.carousel-view').css('transform', `translateX(-${page*400}px)`);
+            // slider換色
+            $('.slider li').eq(page).css('background', 'red').siblings().css('background', 'transparent');
+        });
 
+        $('.btn-right').click(function () {
+            page++;
+            if(page>5){
+                page = 0;
+            }
+            // carousel移動
+            $('.carousel-view').css('transform', `translateX(-${page*400}px)`);
+            // slider換色
+            $('.slider li').eq(page).css('background', 'red').siblings().css('background', 'transparent');
+        });
+
+
+        
+        startInterval();
+        
     </script>
 </body>
 </html>
