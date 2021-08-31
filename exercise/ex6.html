@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form-row</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row mt-3">
+            <form action="">
+                <div class="form-row">
+                    <div class="form-group mr-3">
+                        <select name="city" id="city" class="form-control">
+                            <option value="0">基隆</option>
+                            <option value="1">台北</option>
+                            <option value="2">新北</option>
+                        </select>
+                    </div>
+                    <div class="form-group mr-3">
+                        <select name="district" id="district" class="form-control">
+                            <option value="0">七堵區</option>
+                            <option value="1">中正區</option>
+                            <option value="2">暖暖區</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary sendBtn">送出</button>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-12 sendCity">
+                <span>已送出城市：</span>
+            </div>
+            <div class="col-12 sendDistrict">
+                <span>已送出地區：</span>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
+    <script>
+        let districtAR =[
+            ["七堵區", "中正區", "暖暖區"],
+            ["信義區", "大安區", "士林區"],
+            ["板橋區", "中和區", "五股區"]
+        ];
+
+        $('#city').change(function () {
+            const pos = $(this).val();
+
+            $('#district option').each(function () {
+                $(this).text(districtAR[pos][$(this).index()]);
+            });
+        });
+
+        $('.sendBtn').click(function () {
+            // console.log($('#city').val());
+            const city = $('#city option');
+            const cIndex = $('#city').val();
+            const district = $('#district option');
+            const dIndex = $('#district').val();
+            // console.log(city[$('#city').val()].innerText);
+
+            $('.sendCity span').html(`已送出城市：${city[cIndex].innerText}`);
+            $('.sendDistrict span').html(`已送出地區：${district[dIndex].innerText}`);
+            
+        });
+    </script>
+</body>
+
+</html>
