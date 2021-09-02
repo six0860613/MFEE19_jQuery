@@ -27,13 +27,13 @@
             /* width: 2400px; */
             padding: 0;
             /* transform: translateX(-450px); */
-            transition: 0.5s ease;
+            /* transition: 0.5s ease; */
         }
 
         li.c-img img {
             width: 100%;
             height: 100%;
-            /* object-fit: contain; */
+            object-fit: cover;
         }
 
         .slider {
@@ -103,13 +103,21 @@
         //自動改變火車長度
         const item_len = $('.carousel-view').children().length;        
         $('.carousel-view').css('width', `${item_len*400}px`);
+
         
         let page = 0;
-        
-
         function changePage() {
+            const moveX = - (page * 400) - 400;
             // carousel移動
-            $('.carousel-view').css('transform', `translateX(-${page * 400}px)`);
+            $('.carousel-view').css('transition','0.5s').css('transform', `translateX(${moveX}px)`);
+            // slider換色
+            $('.slider li').eq(page).css('background', 'red').siblings().css('background', 'transparent');
+        }
+
+        function changePageQuiet() {
+            const moveX = - (page * 400) - 400;
+            // carousel移動
+            $('.carousel-view').css('transition','none').css('transform', `translateX(${moveX}px)`);
             // slider換色
             $('.slider li').eq(page).css('background', 'red').siblings().css('background', 'transparent');
         }
@@ -136,18 +144,26 @@
 
         $('.btn-left').click(function () {
             page--;
-            if (page < 0) {
-                page = 5;
-            }
+            if (page < -1) return;
             changePage();
         });
 
         $('.btn-right').click(function () {
             page++;
-            if (page > 5) {
-                page = 0;
-            }
+            if (page > 5) return;
             changePage();
+        });
+
+        $('.carousel-view').on('transitionend', function () {
+            console.log('page', page);
+            if(page >= 5){
+                page = 0;
+                changePageQuiet();
+            }
+            if(page <= -1){
+                page = 4;
+                changePageQuiet();
+            }
         });
 
 
