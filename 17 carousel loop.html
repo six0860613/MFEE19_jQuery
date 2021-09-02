@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>carousel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <style>
+        * {
+            margin: 0;
+        }
+
+        .wrap {
+            max-width: 400px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        ul.carousel-view {
+            display: flex;
+            list-style: none;
+            /* width: 2400px; */
+            padding: 0;
+            /* transform: translateX(-450px); */
+            transition: 0.5s ease;
+        }
+
+        li.c-img img {
+            width: 100%;
+            height: 100%;
+            /* object-fit: contain; */
+        }
+
+        .slider {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        ul.slider li {
+            width: 40px;
+            height: 20px;
+            margin: 0 5px;
+            border: 3px solid rgb(110, 110, 110);
+            cursor: pointer;
+        }
+
+        .btn-left {
+            position: absolute;
+            top: 50%;
+            transform: translateY(50%);
+            left: 10px;
+        }
+
+        .btn-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(50%);
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <ul class="carousel-view">
+            <li class="c-img"><img src="./imgs/5.png" alt=""></li>
+            <li class="c-img"><img src="./imgs/1.png" alt=""></li>
+            <li class="c-img"><img src="./imgs/2.png" alt=""></li>
+            <li class="c-img"><img src="./imgs/3.png" alt=""></li>
+            <li class="c-img"><img src="./imgs/4.png" alt=""></li>
+            <li class="c-img"><img src="./imgs/5.png" alt=""></li>
+            <li class="c-img"><img src="./imgs/1.png" alt=""></li>
+        </ul>
+        <ul class="slider">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <button type="button" class="btn btn-secondary btn-left">←</button>
+        <button type="button" class="btn btn-secondary btn-right">→</button>
+    </div>
+
+    <script src="./js/jquery-3.6.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+    <script>
+        //自動改變火車長度
+        const item_len = $('.carousel-view').children().length;        
+        $('.carousel-view').css('width', `${item_len*400}px`);
+        
+        let page = 0;
+        
+
+        function changePage() {
+            // carousel移動
+            $('.carousel-view').css('transform', `translateX(-${page * 400}px)`);
+            // slider換色
+            $('.slider li').eq(page).css('background', 'red').siblings().css('background', 'transparent');
+        }
+
+        function startInterval() {
+            intervalID = setInterval(() => {
+                page++;
+                if (page > 5) {
+                    page = 0;
+                }
+                changePage();
+            }, 3000);
+        }
+
+
+        $('.slider li').hover(function () {
+            clearInterval(intervalID);
+
+            page = $(this).index();
+            changePage();
+        }, function () {
+            startInterval();
+        });
+
+        $('.btn-left').click(function () {
+            page--;
+            if (page < 0) {
+                page = 5;
+            }
+            changePage();
+        });
+
+        $('.btn-right').click(function () {
+            page++;
+            if (page > 5) {
+                page = 0;
+            }
+            changePage();
+        });
+
+
+        changePage();
+        startInterval();
+
+    </script>
+</body>
+
+</html>
